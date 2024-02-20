@@ -1,0 +1,4 @@
+dm-haiku
+#jax[cuda12_pip]==0.4.12
+jax[cpu]
+tqdm==4.66.1
