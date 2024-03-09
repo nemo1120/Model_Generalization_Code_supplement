@@ -136,7 +136,7 @@ class ButtonGrid:
         return self._num_actions
 
 class ProcMaze:
-    def __init__(self, grid_size=10, spontaneous_termination=True, teleport_on_termination=True):
+    def __init__(self, grid_size=10, spontaneous_termination=True, teleport_on_termination=False, start_on_goal_sometimes=True):
         self.move_map = jnp.asarray([[0, 0], [-1,0], [0,-1], [1,0], [0,1]])
 
         self._num_actions = 5
@@ -149,6 +149,7 @@ class ProcMaze:
             self.spontaneous_goal_probability=0.0
 
         self.teleport_on_termination = teleport_on_termination
+        self.start_on_goal_sometimes = start_on_goal_sometimes
 
         self.channels ={
             'player':0,
@@ -276,6 +277,12 @@ class ProcMaze:
         key, subkey = jx.random.split(key)
         goal = jx.random.choice(subkey, self.grid_size*self.grid_size, p=flat_open/jnp.sum(flat_open))
         goal = jnp.stack(list(jnp.unravel_index(goal, (self.grid_size, self.grid_size))))
+        
+        # With small probability, create environment where agent starts at goal
+        # Need to adjust spontaneous_goal_probability
+        spontanteous_goal = jx.random.bernoulli(subkey, p=self.spontaneous_goal_probability)
+        if(self.start_on_goal_sometimes):
+            goal = jnp.where(spontanteous_goal, pos, goal)
 
         wall_grid = wall_grid.at[goal[0], goal[1]].set(False)
         wall_grid = wall_grid.at[pos[0], pos[1]].set(False)
