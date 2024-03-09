@@ -1,4 +1,4 @@
-dm-haiku
+git+https://github.com/deepmind/dm-haiku
 #jax[cuda12_pip]==0.4.12
-jax[cpu]
+jax[cpu]==0.4.23
 tqdm==4.66.1
