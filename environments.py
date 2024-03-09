@@ -136,7 +136,7 @@ class ButtonGrid:
         return self._num_actions
 
 class ProcMaze:
-    def __init__(self, grid_size=10, spontaneous_termination=True, teleport_on_termination=False, start_on_goal_sometimes=True):
+    def __init__(self, grid_size=10, spontaneous_termination=True, teleport_on_termination=True, start_on_goal_sometimes=False):
         self.move_map = jnp.asarray([[0, 0], [-1,0], [0,-1], [1,0], [0,1]])
 
         self._num_actions = 5
