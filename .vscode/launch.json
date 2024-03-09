@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Run Latent Model Training",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/train_simple_model_DQN.py",
+            "args": [
+                "--seed=0",
+                "--config=configs/simple_model.json",
+                "--output=simple_model"
+            ],
+            "console": "integratedTerminal"
+        }
+    ]
+}
